@@ -17,3 +17,18 @@ class Matter(Document):
 				dt.title=row[0]
 		else:
 			frappe.throw("""Please select a Custom Field Preset. """)
+@frappe.whitelist()
+def make_invoice(source_name, target_doc=None):
+
+	target_doc = get_mapped_doc("Matter", source_name, {
+		"Matter": {
+			"doctype": "Sales Invoice",
+			"field_map": {
+				"client": "customer",
+				"matter_id": "name",
+			}
+		},
+		
+	}, target_doc, set_missing_values)
+
+	return target_doc
