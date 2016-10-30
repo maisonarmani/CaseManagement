@@ -10,5 +10,12 @@ def get_data():
 			"icon": "octicon octicon-file-directory",
 			"type": "module",
 			"label": _("Case Management")
-		}
+		},
+		{
+                        "module_name": "Reports",
+                        "color": "grey",
+                        "icon": "octicon octicon-checklist",
+                        "type": "module",
+                        "label": _("Reports")
+                }
 	]
