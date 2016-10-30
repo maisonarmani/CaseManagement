@@ -19,6 +19,11 @@ class Matter(Document):
 			frappe.throw("""Please select a Custom Field Preset. """)
 @frappe.whitelist()
 def make_invoice(source_name, target_doc=None):
+	def set_missing_values(source, target):
+		pass
+
+	def update_item(source, target, source_parent):
+		pass
 
 	target_doc = get_mapped_doc("Matter", source_name, {
 		"Matter": {
