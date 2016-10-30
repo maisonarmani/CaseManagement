@@ -6,10 +6,10 @@ frappe.ui.form.on('Matter', {
 		if (frm.doc.docstatus==1){
 			frm.add_custom_button(__('Make Invoice'), this.make_invoice);
 		}
-	},make_invoice: function() {
+	},make_invoice: function(frm) {
 		frappe.model.open_mapped_doc({
 			method: "case_management.case_management.doctype.matter.matter.make_invoice",
-			frm: cur_frm
+			frm: frm
 		});
 	}
 });
