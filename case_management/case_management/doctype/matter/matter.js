@@ -10,6 +10,6 @@ frappe.ui.form.on('Matter', {
 		frappe.model.open_mapped_doc({
 			method: "case_management.case_management.doctype.matter.matter.make_invoice",
 			frm: cur_frm
-		})
+		});
 	}
 });
