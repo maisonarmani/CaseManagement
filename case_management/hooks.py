@@ -70,11 +70,10 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
+#doc_events = {
+#	"Sales Invoice": {
+#		"on_submit": "case_management.case_management.doctype.matter.matter.invoice_update",
+#		"on_cancel": "case_management.case_management.doctype.matter.matter.invoice_update"
 #	}
 # }
 

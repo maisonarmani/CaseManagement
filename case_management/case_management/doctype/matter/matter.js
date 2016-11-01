@@ -10,8 +10,12 @@ frappe.ui.form.on('Matter', {
                         method: "case_management.case_management.doctype.matter.matter.make_invoice",
                         frm: cur_frm
                 });
-});
+			});
 		}
+		frm.add_custom_button(__('Show Invoice'),function() {
+//                alert(1);
+                frappe.set_route("List", "Sales Invoice", {'matter_id': frm.doc.name});
+			});
 	},
 });
 //cur_frm.cscript.make_invoice= function() {

@@ -8,6 +8,9 @@ from frappe.model.document import Document
 from frappe.model.mapper import get_mapped_doc
 class Matter(Document):
 	pass
+	def before_submit(self):
+		self.status="Close"
+		self.close_date=frappe.utils.nowdate()
 	def get_custom_field(self):
 		if self.custom_field :
 			data = frappe.db.sql("""select title from `tabMatter Custom Check List Item` where parent="{}" """.format(self.custom_field),as_list=1)
@@ -37,3 +40,4 @@ def make_invoice(source_name, target_doc=None):
 	}, target_doc, set_missing_values)
 
 	return target_doc
+
