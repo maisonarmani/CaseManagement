@@ -17,6 +17,10 @@ frappe.ui.form.on('Matter', {
                 frappe.set_route("List", "Sales Invoice", {'matter_id': frm.doc.name});
 			});
 	},
+	start_timer : function (frm) {
+    	frm.doc.from = get_Today();
+    	refresh_form("from");
+	},
 });
 //cur_frm.cscript.make_invoice= function() {
 //		alert(1);
