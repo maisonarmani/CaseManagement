@@ -64,8 +64,8 @@ def invoice_update(doc,method):
 	if not doc.matter_id:
 		return
 	if method == "on_submit":
-		record = frappe.get_doc("Matter",doc.matter_id)
-		record.append("invoice",{"sales_invoice":doc.name ,"total":flt(doc.grand_total)})
+		record = frappe.new_doc("Matter Invoice")
+		record.append("parent":doc.matter_id,"parenttype":"Matter","parentfield":"invoice","sales_invoice":doc.name ,"total":flt(doc.grand_total)})
 		record.insert()
 		record.save()
 	else:
@@ -76,7 +76,7 @@ def timesheet_update(doc,method):
 	#frappe.throw(method)
 	if method == "on_submit":
 		record = frappe.new_doc("Matter Timesheet")
-		record.update({"parent":doc.matter,"parenttype":"Matter","time_sheet":doc.name ,"total_hours":flt(doc.total_hours),"employee":doc.employee,"employee_name":doc.employee_name})
+		record.update({"parent":doc.matter,"parenttype":"Matter","parentfield":"activities","time_sheet":doc.name ,"total_hours":flt(doc.total_hours),"employee":doc.employee,"employee_name":doc.employee_name})
 		record.insert()
 		record.save()
 	else:
