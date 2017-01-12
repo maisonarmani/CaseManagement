@@ -70,7 +70,7 @@ def invoice_update(doc,method):
 def timesheet_update(doc,method):
 	if method == "on_submit":
 		record = frappe.get_doc("Matter",doc.matter)
-		record.append("activities",{"time_sheet":doc.name ,"total_hours":flt(doc.total_hours)})
+		record.append("activities",{"time_sheet":doc.name ,"total_hours":flt(doc.total_hours),"employee":doc.employee,"employee_name":doc.employee_name})
 		record.insert()
 	else:
 		frappe.db.sql("""delete from `tabMatter Timesheet` where parent="{}" and time_sheet="{}" """.format(doc.matter,doc.name))
