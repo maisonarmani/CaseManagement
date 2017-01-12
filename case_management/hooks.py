@@ -70,12 +70,16 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-#doc_events = {
-#	"Sales Invoice": {
-#		"on_submit": "case_management.case_management.doctype.matter.matter.invoice_update",
-#		"on_cancel": "case_management.case_management.doctype.matter.matter.invoice_update"
-#	}
-# }
+doc_events = {
+	"Sales Invoice": {
+		"on_submit": "case_management.case_management.doctype.matter.matter.invoice_update",
+		"on_cancel": "case_management.case_management.doctype.matter.matter.invoice_update"
+	},
+	"Timesheet": {
+		"on_submit": "case_management.case_management.doctype.matter.matter.timesheet_update",
+		"on_cancel": "case_management.case_management.doctype.matter.matter.timesheet_update"
+	}
+ }
 
 # Scheduled Tasks
 # ---------------
