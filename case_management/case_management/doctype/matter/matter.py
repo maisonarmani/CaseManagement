@@ -41,7 +41,7 @@ def make_invoice(source_name, target_doc=None):
 	}, target_doc, set_missing_values)
 
 	return target_doc
-
+@frappe.whitelist()
 def make_timesheet(source_name, target_doc=None):
 	def set_missing_values(source, target):
 		pass
