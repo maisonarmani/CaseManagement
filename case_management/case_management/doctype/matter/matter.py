@@ -76,7 +76,7 @@ def timesheet_update(doc,method):
 	#frappe.throw(method)
 	if method == "on_submit":
 		record = frappe.new_doc("Matter Timesheet")
-		record.update({"time_sheet":doc.name ,"total_hours":flt(doc.total_hours),"employee":doc.employee,"employee_name":doc.employee_name})
+		record.update({"parent":doc.matter,"time_sheet":doc.name ,"total_hours":flt(doc.total_hours),"employee":doc.employee,"employee_name":doc.employee_name})
 		record.insert()
 		record.save()
 	else:
