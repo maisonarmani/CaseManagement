@@ -65,7 +65,7 @@ def invoice_update(doc,method):
 		return
 	if method == "on_submit":
 		record = frappe.new_doc("Matter Invoice")
-		record.append({"parent":doc.matter_id,"parenttype":"Matter","parentfield":"invoice","sales_invoice":doc.name ,"total":flt(doc.grand_total)})
+		record.update({"parent":doc.matter_id,"parenttype":"Matter","parentfield":"invoice","sales_invoice":doc.name ,"total":flt(doc.grand_total)})
 		record.insert()
 		record.save()
 	else:
