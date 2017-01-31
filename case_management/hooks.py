@@ -73,8 +73,7 @@ app_license = "MIT"
 doc_events = {
 	"Sales Invoice": {
 		"on_submit": "case_management.case_management.doctype.matter.matter.invoice_update",
-		"on_cancel": "case_management.case_management.doctype.matter.matter.invoice_update",
-		"on_update": "case_management.case_management.doctype.matter.matter.invoice_update"
+		"on_cancel": "case_management.case_management.doctype.matter.matter.invoice_update"
 	},
 	"Timesheet": {
 		"on_submit": "case_management.case_management.doctype.matter.matter.timesheet_update",
