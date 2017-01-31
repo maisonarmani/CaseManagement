@@ -60,15 +60,18 @@ def make_timesheet(source_name, target_doc=None):
 	}, target_doc, set_missing_values)
 
 	return target_doc
+
 def invoice_update(doc,method):
 	if not doc.matter_id:
 		return
 	if method == "on_submit":
 		record = frappe.new_doc("Matter Invoice")
 		#frappe.throw(doc.name)
-		record.update({"parent":doc.matter_id,"parenttype":"Matter","parentfield":"invoice","invoice":doc.name ,"total":flt(doc.grand_total)})
+		record.update({"parent":doc.matter_id,"parenttype":"Matter","parentfield":"invoice","status":doc.status,"invoice":doc.name ,"total":flt(doc.grand_total)})
 		record.insert()
 		record.save()
+	elif method == "on_update":
+		frappe.db.sql("""update `tabMatter Invoice` set status="{}" where parent="{}" and sales_invoice="{}" """.format(doc.status,doc.matter_id,doc.name))
 	else:
 		frappe.db.sql("""delete from `tabMatter Invoice` where parent="{}" and sales_invoice="{}" """.format(doc.matter_id,doc.name))
 def timesheet_update(doc,method):
