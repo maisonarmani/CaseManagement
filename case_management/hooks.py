@@ -75,6 +75,10 @@ doc_events = {
 		"on_submit": "case_management.case_management.doctype.matter.matter.invoice_update",
 		"on_cancel": "case_management.case_management.doctype.matter.matter.invoice_update",
 		#"after_update": "case_management.case_management.doctype.matter.matter.invoice_update",
+	},"Payment Entry": {
+		"on_submit": "case_management.case_management.doctype.matter.matter.invoice_payment_update",
+		"on_cancel": "case_management.case_management.doctype.matter.matter.invoice_payment_cancel",
+		#"after_update": "case_management.case_management.doctype.matter.matter.invoice_update",
 	},
 	"Timesheet": {
 		"on_submit": "case_management.case_management.doctype.matter.matter.timesheet_update",

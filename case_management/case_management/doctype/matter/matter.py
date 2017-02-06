@@ -86,3 +86,12 @@ def timesheet_update(doc,method):
 		record.save()
 	else:
 		frappe.db.sql("""delete from `tabMatter Timesheet` where parent="{}" and time_sheet="{}" """.format(doc.matter,doc.name))
+
+def invoice_payment_update(doc,method):
+	for row in doc.references:
+		if row.allocated_amount==row.outstanding_amount:
+			frappe.db.sql("""update `tabMatter Invoice` set status="paid" where sales_invoice="{}" """.format(doc.name))
+
+def invoice_payment_cancel(doc,method):
+	for row in doc.references:
+		frappe.db.sql("""update `tabMatter Invoice` set status="unpaid" where  sales_invoice="{}" """.format(doc.name))
