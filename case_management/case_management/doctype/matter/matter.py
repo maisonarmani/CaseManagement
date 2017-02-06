@@ -89,10 +89,10 @@ def timesheet_update(doc,method):
 
 def invoice_payment_update(doc,method):
 	for row in doc.references:
-		if row.allocated_amount==row.outstanding_amount and row.reference_doctype="Sales Invoice":
+		if row.allocated_amount==row.outstanding_amount and row.reference_doctype=="Sales Invoice":
 			frappe.db.sql("""update `tabMatter Invoice` set status="paid" where sales_invoice="{}" """.format(doc.reference_name))
 
 def invoice_payment_cancel(doc,method):
 	for row in doc.references:
-		if row.reference_doctype="Sales Invoice":
+		if row.reference_doctype=="Sales Invoice":
 			frappe.db.sql("""update `tabMatter Invoice` set status="Unpaid" where  sales_invoice="{}" """.format(doc.reference_name))
