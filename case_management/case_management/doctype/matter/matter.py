@@ -70,8 +70,9 @@ def invoice_update(doc,method):
 		record.update({"parent":doc.matter_id,"parenttype":"Matter","parentfield":"invoice","status":doc.status,"invoice":doc.name ,"total":flt(doc.grand_total)})
 		record.insert()
 		record.save()
-	elif method == "on_update":
-		frappe.db.sql("""update `tabMatter Invoice` set status="{}" where parent="{}" and sales_invoice="{}" """.format(doc.status,doc.matter_id,doc.name))
+	#elif method == "after_update":
+		#frappe.throw("tes")
+		#frappe.db.sql("""update `tabMatter Invoice` set status="{}" where parent="{}" and sales_invoice="{}" """.format(doc.status,doc.matter_id,doc.name))
 	else:
 		frappe.db.sql("""delete from `tabMatter Invoice` where parent="{}" and sales_invoice="{}" """.format(doc.matter_id,doc.name))
 def timesheet_update(doc,method):
