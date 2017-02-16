@@ -74,7 +74,7 @@ def invoice_update(doc,method):
 		#frappe.throw("tes")
 		#frappe.db.sql("""update `tabMatter Invoice` set status="{}" where parent="{}" and sales_invoice="{}" """.format(doc.status,doc.matter_id,doc.name))
 	else:
-		frappe.db.sql("""delete from `tabMatter Invoice` where parent="{}" and sales_invoice="{}" """.format(doc.matter_id,doc.name))
+		frappe.db.sql("""delete from `tabMatter Invoice` where parent="{}" and invoice="{}" """.format(doc.matter_id,doc.name))
 def timesheet_update(doc,method):
 	if not doc.matter:
 		return
