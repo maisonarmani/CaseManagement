@@ -4,12 +4,12 @@ from frappe import _
 def get_data():
 	return [
 		{
-			"label": _("Accounts Report"),
+			"label": _("Accounts"),
 			"items": [
 				{
 					"type": "report",
 					"name": "Accounts Receivable",
-					"doctype": "Sales Invoice",	
+					"doctype": "Sales Invoice",
 					"is_query_report": True
 				},
 				{
@@ -47,6 +47,12 @@ def get_data():
 					"name": "Profit and Loss Statement",
 					"doctype": "GL Entry",
 					"is_query_report": True
+				},
+				{
+					"type": "report",
+					"name": "Petty Cash Log Report",
+					"is_query_report": True,
+					"doctype": "Petty Cash Log"
 				},
 				{
 					"type": "report",
@@ -122,6 +128,39 @@ def get_data():
 				},
 				{
 					"type": "report",
+					"is_query_report": True,
+					"name": "Purchase by Items Report Summary",
+					"doctype": "Purchase Invoice"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Purchase by Items Report Details",
+					"doctype": "Purchase Invoice"
+				},
+				{
+					"type": "report",
+					"name": "Fixed Asset Register Report",
+					"doctype": "Asset",
+					"is_query_report": True,
+				},{
+					"type": "report",
+					"name": "Payment Entry Report",
+					"doctype": "Payment Entry",
+					"is_query_report": True,
+				},{
+					"type": "report",
+					"name": "Overdue Sales Invoice",
+					"doctype": "Sales Invoice",
+					"is_query_report": True,
+				},{
+					"type": "report",
+					"name": "Overdue Purchase Invoice",
+					"doctype": "Purchase Invoice",
+					"is_query_report": True,
+				},
+				{
+					"type": "report",
 					"name": "Asset Depreciation Ledger",
 					"doctype": "Asset",
 					"is_query_report": True,
@@ -140,27 +179,9 @@ def get_data():
 				},
 				{
 					"type": "report",
-					"name": "Payment Period Based On Invoice Date",
-					"is_query_report": True,
-					"doctype": "Journal Entry"
-				},
-				{
-					"type": "report",
 					"name": "Sales Partners Commission",
 					"is_query_report": True,
 					"doctype": "Sales Invoice"
-				},
-				{
-					"type": "report",
-					"name": "Item-wise Sales Register",
-					"is_query_report": True,
-					"doctype": "Sales Invoice"
-				},
-				{
-					"type": "report",
-					"name": "Item-wise Purchase Register",
-					"is_query_report": True,
-					"doctype": "Purchase Invoice"
 				},
 				{
 					"type": "report",
@@ -180,46 +201,44 @@ def get_data():
 					"name": "Customer Credit Balance",
 					"doctype": "Customer"
 				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Payment Voucher Report",
+					"doctype": "Payment Voucher Form"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Bank Balance Report",
+					"doctype": "Journal Entry"
+				},
 			]
 		},
 		{
 			"label": _("Purchasing"),
-			"icon": "icon-table",
 			"items": [
 				{
-					"type": "page",
-					"name": "purchase-analytics",
-					"label": _("Purchase Analytics"),
-					"icon": "icon-bar-chart",
+					"type": "report",
+					"is_query_report": True,
+					"name": "Purchase Order Status Report",
+					"doctype": "Purchase Order Status"
+				},{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Purchase by Items Report Summary",
+					"doctype": "Purchase Invoice"
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Supplier-Wise Sales Analytics",
-					"doctype": "Stock Ledger Entry"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Purchase Order Trends",
-					"doctype": "Purchase Order"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Items To Be Requested",
-					"doctype": "Item"
+					"name": "Purchase by Items Report Details",
+					"doctype": "Purchase Invoice"
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
 					"name": "Requested Items To Be Ordered",
-					"doctype": "Material Request"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Material Requests for which Supplier Quotations are not created",
 					"doctype": "Material Request"
 				},
 				{
@@ -234,11 +253,16 @@ def get_data():
 					"name": "Supplier Addresses and Contacts",
 					"doctype": "Supplier"
 				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Purchase Order Summary Report",
+					"doctype": "Purchase Order"
+				}
 			]
 		},
 		{
 			"label": _("CRM"),
-			"icon": "icon-list",
 			"items": [
 				{
 					"type": "page",
@@ -273,8 +297,7 @@ def get_data():
 			]
 		},
 		{
-			"label": _("Human Resources Reports"),
-			"icon": "icon-list",
+			"label": _("Human Resources"),
 			"items": [
 				{
 					"type": "report",
@@ -311,12 +334,116 @@ def get_data():
 					"name": "Monthly Attendance Sheet",
 					"doctype": "Attendance"
 				},
-
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Expense Claim Report",
+					"doctype": "Expense Claim"
+				},
 			]
 		},
 		{
-			"label": _("Sales Report"),
-			"icon": "icon-table",
+			"label": _("Logistics"),
+			"items": [
+				{
+					"type": "report",
+					"name": "Vehicle Fuel Consumption log Report",
+					"route": "query-report/Vehicle Fuel Consumption log Report",
+					"doctype": "Vehicle Fuel Consumption log",
+				},
+				{
+					"type": "report",
+					"name": "Vehicle Allocation Schedule Report",
+					"route": "query-report/Vehicle Allocation Schedule Report",
+					"doctype": "Vehicle Schedule",
+				},
+				{
+					"type": "report",
+					"name": "Goods Tracking Report",
+					"route": "query-report/Goods Tracking Report",
+					"doctype": "Vehicle Schedule",
+				},
+				{
+					"type": "report",
+					"name": "Vehicle Maintenance Log Report",
+					"route": "query-report/Vehicle Maintenance Log Report",
+					"doctype": "Vehicle Maintenance Log",
+				},
+				{
+					"type": "report",
+					"name": "Vehicle Mileage Report",
+					"route": "query-report/Vehicle Mileage Report",
+					"doctype": "Daily Vehicle Mileage Log",
+				},
+				#{
+				#	"type": "report",
+				#	"name": "Logistics Expense Report",
+				#	"route": "query-report/Logistics Expense Report",
+				#	"doctype": "Logistics Expense",
+				#},
+			]
+		},
+		{
+			"label": _("Manufacture"),
+			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Open Production Orders",
+					"doctype": "Production Order"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Production Orders in Progress",
+					"doctype": "Production Order"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Issued Items Against Production Order",
+					"doctype": "Production Order"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Completed Production Orders",
+					"doctype": "Production Order"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "BOM Search",
+					"doctype": "BOM"
+				},
+			]
+		},
+		{
+			"label": _("Projects"),
+			"items": [
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Daily Timesheet Summary",
+					"doctype": "Timesheet"
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Project wise Stock Tracking",
+					"doctype": "Project"
+				},
+				{
+					"type": "report",
+					"route": "Gantt/Task",
+					"doctype": "Task",
+					"name": "Gantt Chart",
+					"description": _("Gantt chart of all tasks.")
+				},
+			]
+		},
+		{
+			"label":_("Selling"),
 			"items": [
 				{
 					"type": "report",
@@ -333,41 +460,52 @@ def get_data():
 					"doctype": "Sales Person",
 				},
 				{
-					"type": "page",
-					"name": "sales-analytics",
-					"label": _("Sales Analytics"),
-					"icon": "icon-bar-chart",
+					"type": "report",
+					"name": "Call Log Report",
+					"is_query_report": True,
+					"doctype": "Call Log",
 				},
 				{
-					"type": "page",
-					"name": "sales-funnel",
-					"label": _("Sales Funnel"),
-					"icon": "icon-bar-chart",
+					"type": "report",
+					"name": "Daily Route Activity Report",
+					"route": "query-report/Daily Route Activity Report",
+					"doctype": "Daily Route Activity",
+				},
+				{
+					"type": "report",
+					"name": "Outlet Survey Report",
+					"route": "query-report/Outlet Survey Report",
+					"doctype": "Outlet Survey",
+				},
+				{
+					"type": "report",
+					"name": "Sales by Product Report",
+					"route": "query-report/Sales by Product Report",
+					"doctype": "Sales Invoice",
+				},
+				{
+					"type": "report",
+					"name": "Customer Commission Report",
+					"route": "query-report/Customer Commission Report",
+					"doctype": "Sales Invoice",
+				},
+				{
+					"type": "report",
+					"name": "Sales Rep Scorecard Report",
+					"route": "query-report/Sales Rep Scorecard Report",
+					"doctype": "Sales Invoice",
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Customer Acquisition and Loyalty",
-					"doctype": "Customer",
-					"icon": "icon-bar-chart",
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Quotation Trends",
-					"doctype": "Quotation"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Sales Order Trends",
+					"name": "Product Delivery & Distribution Schedule Report",
 					"doctype": "Sales Order"
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Lead Details",
-					"doctype": "Lead"
+					"name": "Sales By Product Report Summary",
+					"doctype": "Sales Order"
 				},
 				{
 					"type": "report",
@@ -384,37 +522,7 @@ def get_data():
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Sales Person-wise Transaction Summary",
-					"doctype": "Sales Order"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Item-wise Sales History",
-					"doctype": "Item"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "BOM Search",
-					"doctype": "BOM"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
 					"name": "Inactive Customers",
-					"doctype": "Sales Order"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Available Stock for Packing Items",
-					"doctype": "Item",
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Pending SO Items For Purchase Request",
 					"doctype": "Sales Order"
 				},
 				{
@@ -423,16 +531,40 @@ def get_data():
 					"name": "Customer Credit Balance",
 					"doctype": "Customer"
 				},
+				{
+					"type": "report",
+					"name": "Sales Person-wise Transaction Summary",
+					"doctype": "Sales Order",
+					"is_query_report": True,
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Sales Variance Report",
+					"doctype": "Sales order"
+				},
 			]
 		},
 		{
-			"label": _("Inventory Reports"),
-			"items": [
+			"label":_("Stock"),
+			"items":[
 				{
 					"type": "report",
 					"is_query_report": True,
 					"name": "Stock Ledger",
 					"doctype": "Stock Ledger Entry",
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Stock Ledger Simplified",
+					"doctype": "Stock Ledger Entry",
+				},
+				{
+					"type": "report",
+					"is_query_report": True,
+					"name": "Raw material re-order Report",
+					"doctype": "Item",
 				},
 				{
 					"type": "report",
@@ -454,42 +586,15 @@ def get_data():
 				},
 				{
 					"type": "report",
-					"name": "Serial No Service Contract Expiry",
-					"doctype": "Serial No"
-				},
-				{
-					"type": "report",
-					"name": "Serial No Status",
-					"doctype": "Serial No"
-				},
-				{
-					"type": "report",
-					"name": "Serial No Warranty Expiry",
-					"doctype": "Serial No"
-				},
-								{
-					"type": "report",
-					"is_query_report": False,
-					"name": "Item-wise Price List Rate",
-					"doctype": "Item Price",
-				},
-				{
-					"type": "page",
-					"name": "stock-analytics",
-					"label": _("Stock Analytics"),
-					"icon": "icon-bar-chart"
+					"is_query_report": True,
+					"name": "Store Bin Cards Report",
+					"doctype": "Store Bin Card",
 				},
 				{
 					"type": "report",
 					"is_query_report": True,
-					"name": "Delivery Note Trends",
-					"doctype": "Delivery Note"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Purchase Receipt Trends",
-					"doctype": "Purchase Receipt"
+					"name":"Material Receipt List Report",
+					"doctype": "Purchase Receipt",
 				},
 				{
 					"type": "report",
@@ -505,30 +610,6 @@ def get_data():
 				},
 				{
 					"type": "report",
-					"name": "Item Shortage Report",
-					"route": "Report/Bin/Item Shortage Report",
-					"doctype": "Purchase Receipt"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Requested Items To Be Transferred",
-					"doctype": "Material Request"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Batch-Wise Balance History",
-					"doctype": "Batch"
-				},
-				{
-					"type": "report",
-					"is_query_report": True,
-					"name": "Item Prices",
-					"doctype": "Price List"
-				},
-				{
-					"type": "report",
 					"is_query_report": True,
 					"name": "Itemwise Recommended Reorder Level",
 					"doctype": "Item"
@@ -536,9 +617,8 @@ def get_data():
 			]
 		},
 		{
-			"label": _("Help Desk Reports"),
-			"icon": "icon-list",
-			"items": [
+			"label":"Support",
+			"items":[
 				{
 					"type": "page",
 					"name": "support-analytics",
@@ -551,8 +631,54 @@ def get_data():
 					"doctype": "Issue",
 					"is_query_report": True
 				},
+				{
+					"type": "report",
+					"name": "HelpDesk Report",
+					"doctype": "Helpdesk Ticket",
+					"is_query_report": True
+				},
+				{
+					"type": "report",
+					"name": "Job Card Status Report",
+					"doctype": "Job Card",
+					"is_query_report": True
+				},
+				{
+					"type": "report",
+					"name": "Job Card Cost Report",
+					"doctype": "Job Card",
+					"is_query_report": True
+				},
+				{
+					"type": "report",
+					"name": "Job Card Completion Report",
+					"doctype": "Job Card",
+					"is_query_report": True
+				},
+				{
+					"type": "report",
+					"name": "Computing Asset Inspection Checklist Report",
+					"doctype": "Computing Asset Inspection Checklist",
+					"is_query_report": True
+				},
+				{
+					"type": "report",
+					"name": "Fixed Asset Inspection Checklist Report",
+					"doctype": "Fixed Asset Inspection Checklist",
+					"is_query_report": True
+				},
+				{
+					"type": "report",
+					"name": "Generator Fuel Consumption Log Report",
+					"doctype": "Generator Fuel Consumption Log",
+					"is_query_report": True
+				},
+				{
+					"type": "report",
+					"name": "Daily Generator Activity Log Report",
+					"doctype": "Daily Generator Activity Log",
+					"is_query_report": True
+				},
 			]
-		},
-
+		}
 	]
-
