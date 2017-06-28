@@ -42,6 +42,10 @@ app_license = "MIT"
 # automatically create page for each record of this doctype
 # website_generators = ["Web Page"]
 
+# Fixtures
+fixtures = ["Custom Field","Workflow"]
+
+
 # Installation
 # ------------
 

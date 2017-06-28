@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2015, bobzz.zone@gmail.com and contributors
+# Copyright (c) 2015, bobzz.zone@gmail.com , masonarmani38@gmail.com and contributors
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
@@ -27,6 +27,12 @@ class Matter(Document):
                 dt.title = row[0]
         else:
             frappe.throw("""Please select a Custom Field Preset. """)
+
+
+@frappe.whitelist()
+def get_lawyer(doctype, txt, searchfield, start, page_len, filters):
+    return frappe.db.sql("""select u.name, concat(u.first_name, ' ', u.last_name) from tabUser u, `tabHas Role` r where
+    u.name = r.parent and r.role = 'Lawyer' and u.enabled = 1 and u.name like %s""", ("%" + txt + "%"))
 
 
 @frappe.whitelist()
