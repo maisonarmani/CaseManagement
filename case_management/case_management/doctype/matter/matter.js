@@ -6,7 +6,11 @@ frappe.ui.form.on('Matter', {
         var filter = function (p) {
             return {filters: {designation: p}}
         };
-        frm.fields_dict.responsible_solicitor.get_query = filter("Solicitor");
+        frm.fields_dict.responsible_solicitor.get_query = function () {
+            return {
+                query: "case_management.case_management.doctype.matter.matter.get_lawyer"
+            };
+        };
     },
     refresh: function (frm) {
         frm.add_custom_button(__('Make Invoice'), function () {
