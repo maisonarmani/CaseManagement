@@ -28,6 +28,27 @@ class Matter(Document):
         else:
             frappe.throw("""Please select a Custom Field Preset. """)
 
+@frappe.whitelist()
+def get_events(start, end, filters=None):
+    """Returns events for Gantt / Calendar view rendering.
+
+    :param start: Start date-time.
+    :param end: End date-time.
+    :param filters: Filters (JSON).
+    """
+    from frappe.desk.calendar import get_event_conditions
+    conditions = get_event_conditions("Matter", filters)
+
+    data = frappe.db.sql("""select name,CONCAT(name," ",client) as title , open_date,
+		close_date, status from `tabMatter` where 
+		((ifnull(open_date, '0000-00-00') != '0000-00-00')  and (open_date <= %(end)s and open_date >= %(start)s)) 
+		{conditions}
+		""".format(conditions=conditions), {
+        "start": start,
+        "end": end
+    }, as_dict=True)
+    return data
+
 
 @frappe.whitelist()
 def make_invoice(source_name, target_doc=None):

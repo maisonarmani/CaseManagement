@@ -70,6 +70,9 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
+calendars = ["Matter"]
+
+
 doc_events = {
 	"Sales Invoice": {
 		"on_submit": "case_management.case_management.doctype.matter.matter.invoice_update",

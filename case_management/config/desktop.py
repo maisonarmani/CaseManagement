@@ -7,8 +7,7 @@ def get_data():
     return [
         {
             "module_name": "Case Management",
-            "color": "#934bec",
-            "doctype": "File",
+            "color": "rgb(14, 96, 134)",
             "icon": "octicon octicon-file-directory",
             "label": _("Case Management"),
             "link": "modules/Case Management",
@@ -16,18 +15,20 @@ def get_data():
             "hidden": 0
         },
         {
-            "module_name": "Reports",
-            "color": "#bdc3c7",
-            "icon": "octicon octicon-checklist",
-            "type": "module",
-            "label": _("Reports")
+            "module_name": "Matter",
+            "_doctype":"Matter",
+            "color": "rgb(14, 131, 52)",
+            "icon": "octicon octicon-briefcase",
+            "type": "list",
+            "label":"Matter",
+            "link": "List/Matter"
         },
         {
-            "module_name": "Matter",
-            "_doctype": "Matter",
-            "color": "teal",
-            "icon": "octicon octicon-briefcase",
-            "type": "link",
-            "link": "List/Matter"
+            "module_name": "Calendar",
+            "color": "rgb(14, 131, 52)",
+            "icon": "octicon octicon-calendar",
+            "type": "page",
+            "label":"Matter Calendar",
+            "link": "List/Matter/Calendar"
         },
     ]
