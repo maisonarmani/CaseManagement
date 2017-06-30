@@ -74,7 +74,7 @@ fixtures = ["Custom Field","Workflow"]
 # ---------------
 # Hook on document methods and events
 
-calendars = ["Matter"]
+calendars = []
 
 
 doc_events = {

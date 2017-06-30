@@ -46,8 +46,8 @@ def get_data():
                 {
                     "type": "doctype",
                     "name": "Event",
-                    "label":"Calender",
-                    "description": _("Calendar")
+                    "label":"Event",
+                    "description": _("Event")
                 },
                 {
                     "type": "doctype",
