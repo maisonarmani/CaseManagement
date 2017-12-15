@@ -23,11 +23,11 @@ def get_data(filters):
 
 
 	# Expense Claims
-	sql = "select posting_date, matter, name, remark, owner, exp_approver ,total_claimed_amount from `tabExpense Claim` WHERE {0} and (docstatus = 1 and status='Paid')"
+	sql = "select posting_date, matter, name, remark,total_claimed_amount from `tabExpense Claim` WHERE {0} and (docstatus = 1 and status='Paid')"
 	ec_sql = sql.format(ec_conditions)
 
 	# Purchase Invoice
-	sql = "select posting_date, matter, name, supplier ,owner, 'Approver' , base_grand_total from `tabPurchase Invoice` WHERE {0} and (docstatus = 1 and status='Paid')"
+	sql = "select posting_date, matter, name, supplier, base_grand_total from `tabPurchase Invoice` WHERE {0} and (docstatus = 1 and status='Paid')"
 	pi_sql = sql.format(pi_conditions)
 
 	data = frappe.db.sql("{0} UNION {1}".format(ec_sql, pi_sql))
@@ -42,7 +42,5 @@ def get_column():
 		"Matter:Link/Matter:100",
 		"Document ID:Data:150",
 		"Description:Data:250",
-		"Created by:Link/User:200",
-		"Approver:Link/User:150",
 		"Amount:Currency:150",
 	]
