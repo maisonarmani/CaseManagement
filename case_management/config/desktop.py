@@ -41,7 +41,6 @@ def get_data():
             "_doctype": "Timesheet",
             "type": "list"
         },
-
         {
             "module_name": "Time Tracking",
             "color": "#8d62b6",
@@ -49,6 +48,15 @@ def get_data():
             "label": _("Time Tracking"),
             "link": "List/Time Tracking",
             "_doctype": "Time Tracking",
+            "type": "list"
+        },
+        {
+            "module_name": "Expense Claim",
+            "color": "#8d63c6",
+            "icon": "fa fa-money",
+            "label": _("Expense Claim"),
+            "link": "List/Expense Claim",
+            "_doctype": "Expense Claim",
             "type": "list"
         },
     ]
