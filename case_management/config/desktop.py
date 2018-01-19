@@ -8,7 +8,7 @@ def get_data():
         {
             "module_name": "Case Management",
             "color": "rgb(14, 96, 134)",
-            "icon": "octicon octicon-file-directory",
+            "icon": "octicon octicon-law",
             "label": _("Case Management"),
             "link": "modules/Case Management",
             "type": "module",
@@ -24,11 +24,31 @@ def get_data():
             "link": "List/Matter"
         },
         {
-            "module_name": "Calendar",
-            "color": "rgb(14, 131, 52)",
+            "module_name": "Event",
+            "color": "rgb(14, 121, 52)",
             "icon": "octicon octicon-calendar",
-            "type": "page",
-            "label":"Matter Calendar",
-            "link": "List/Matter/Calendar"
+            "type": "list",
+            "label":"Calendar",
+            "link": "List/Event"
+        },
+
+        {
+            "module_name": "Timesheet",
+            "color": "#8d99b6",
+            "icon": "octicon octicon-checklist",
+            "label": _("Timesheet"),
+            "link": "List/Timesheet",
+            "_doctype": "Timesheet",
+            "type": "list"
+        },
+
+        {
+            "module_name": "Time Tracking",
+            "color": "#8d62b6",
+            "icon": "octicon octicon-watch",
+            "label": _("Time Tracking"),
+            "link": "List/Time Tracking",
+            "_doctype": "Time Tracking",
+            "type": "list"
         },
     ]

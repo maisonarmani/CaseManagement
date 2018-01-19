@@ -77,6 +77,27 @@ def make_invoice(source_name, target_doc=None):
 
     return target_doc
 
+@frappe.whitelist()
+def make_expense(source_name, target_doc=None):
+    def set_missing_values(source, target):
+        pass
+
+    def update_item(source, target, source_parent):
+        pass
+
+    target_doc = get_mapped_doc("Matter", source_name, {
+        "Matter": {
+            "doctype": "Expense Claim",
+            "field_map": {
+                "client": "customer",
+                "matter_id": "name",
+            }
+        },
+
+    }, target_doc, set_missing_values)
+
+    return target_doc
+
 
 @frappe.whitelist()
 def make_timesheet(source_name, target_doc=None):
@@ -145,3 +166,12 @@ def invoice_payment_cancel(doc, method):
         if row.reference_doctype == "Sales Invoice":
             frappe.db.sql(
                 """update `tabMatter Invoice` set status="Unpaid" where  invoice="{}" """.format(row.reference_name))
+
+
+
+
+@frappe.whitelist()
+def resolve(doctype, docname):
+    # update without checking permissions
+    frappe.db.sql("update `tab%s` set status = 'Closed' where name = '%s'" % (doctype, docname))
+    return True
