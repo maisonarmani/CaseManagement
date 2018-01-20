@@ -100,8 +100,7 @@ def make_expense(source_name, target_doc=None):
         "Matter": {
             "doctype": "Expense Claim",
             "field_map": {
-                "client": "customer",
-                "matter_id": "name",
+                "matter": "name",
             }
         },
 
@@ -122,7 +121,7 @@ def make_task(source_name, target_doc=None):
             "doctype": "Task",
             "field_map": {
                 "client": "customer",
-                "matter_id": "name",
+                "matter": "name",
             }
         },
 
@@ -160,12 +159,48 @@ def invoice_update(doc, method):
                        "invoice": doc.name, "total": flt(doc.grand_total)})
         record.insert()
         record.save()
-    # elif method == "after_update":
-    # frappe.throw("tes")
-    # frappe.db.sql("""update `tabMatter Invoice` set status="{}" where parent="{}" and sales_invoice="{}" """.format(doc.status,doc.matter_id,doc.name))
     else:
         frappe.db.sql(
             """delete from `tabMatter Invoice` where parent="{}" and invoice="{}" """.format(doc.matter_id, doc.name))
+
+
+def payment_update(doc, method):
+    for row in doc.references:
+        if row.allocated_amount == row.outstanding_amount and row.reference_doctype == "Sales Invoice":
+            frappe.db.sql(
+                """update `tabMatter Invoice` set status="Paid" where invoice="{}" """.format(row.reference_name))
+
+        if row.allocated_amount == row.outstanding_amount and row.reference_doctype == "Expense Claim":
+            frappe.db.sql(
+                """update `tabMatter Expense` set status="Paid" where expense="{}" """.format(row.reference_name))
+
+def payment_cancel(doc, method):
+    for row in doc.references:
+        if row.reference_doctype == "Sales Invoice":
+            frappe.db.sql(
+                """update `tabMatter Invoice` set status="Unpaid" where  invoice="{}" """.format(row.reference_name))
+
+        if row.reference_doctype == "Expense Claim":
+                frappe.db.sql(
+                    """update `tabMatter Expense` set status="Unpaid" where  expense="{}" """.format(row.reference_name))
+
+
+def expense_update(doc, method):
+    if not doc.matter:
+        return
+    if method == "on_submit":
+        record = frappe.new_doc("Matter Expense")
+        # frappe.throw(doc.name)
+        record.update({"parent": doc.matter, "parenttype": "Matter", "parentfield": "expense", "status": doc.status,
+                       "expense": doc.name, "total": flt(doc.total_sanctioned_amount)})
+        record.insert()
+        record.save()
+    else:
+        frappe.db.sql(
+            """delete from `tabMatter Expense` where parent="{}" and expense="{}" """.format(doc.matter, doc.name))
+
+
+
 
 def timesheet_update(doc, method):
     if not doc.matter:
@@ -181,18 +216,6 @@ def timesheet_update(doc, method):
     else:
         frappe.db.sql(
             """delete from `tabMatter Timesheet` where parent="{}" and time_sheet="{}" """.format(doc.matter, doc.name))
-
-def invoice_payment_update(doc, method):
-    for row in doc.references:
-        if row.allocated_amount == row.outstanding_amount and row.reference_doctype == "Sales Invoice":
-            frappe.db.sql(
-                """update `tabMatter Invoice` set status="Paid" where invoice="{}" """.format(row.reference_name))
-
-def invoice_payment_cancel(doc, method):
-    for row in doc.references:
-        if row.reference_doctype == "Sales Invoice":
-            frappe.db.sql(
-                """update `tabMatter Invoice` set status="Unpaid" where  invoice="{}" """.format(row.reference_name))
 
 
 @frappe.whitelist()

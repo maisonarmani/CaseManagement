@@ -66,10 +66,11 @@ frappe.ui.form.on('Matter', {
             frappe.set_route("List", "Task", {'matter': frm.doc.name});
         }, "View");
         frm.add_custom_button(__('Case Files'), function () {
-            frappe.set_route("List", "File", "Home", "Case Files", cur_frm.doc.name)
+            frappe.set_route("List", "File", "Home", "Case Files", cur_frm.doc.name);
         }, "View");
 
 
+        frm.page.set_inner_btn_group_as_primary(__("View"));
     },
     start_timer: function (frm) {
         frm.doc.from = get_Today();

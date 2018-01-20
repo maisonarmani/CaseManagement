@@ -43,8 +43,7 @@ app_license = "MIT"
 # website_generators = ["Web Page"]
 
 # Fixtures
-fixtures = ["Custom Field","Workflow"]
-
+fixtures = ["Custom Field", "Workflow"]
 
 # Installation
 # ------------
@@ -76,22 +75,25 @@ fixtures = ["Custom Field","Workflow"]
 
 calendars = []
 
-
 doc_events = {
-	"Sales Invoice": {
-		"on_submit": "case_management.case_management.doctype.matter.matter.invoice_update",
-		"on_cancel": "case_management.case_management.doctype.matter.matter.invoice_update",
-		#"after_update": "case_management.case_management.doctype.matter.matter.invoice_update",
-	},"Payment Entry": {
-		"on_submit": "case_management.case_management.doctype.matter.matter.invoice_payment_update",
-		"on_cancel": "case_management.case_management.doctype.matter.matter.invoice_payment_cancel",
-		#"after_update": "case_management.case_management.doctype.matter.matter.invoice_update",
-	},
-	"Timesheet": {
-		"on_submit": "case_management.case_management.doctype.matter.matter.timesheet_update",
-		"on_cancel": "case_management.case_management.doctype.matter.matter.timesheet_update"
-	}
- }
+    "Sales Invoice": {
+        "on_submit": "case_management.case_management.doctype.matter.matter.invoice_update",
+        "on_cancel": "case_management.case_management.doctype.matter.matter.invoice_update"
+    },
+    "Expense Claim": {
+        "on_submit": "case_management.case_management.doctype.matter.matter.expense_update",
+        "on_cancel": "case_management.case_management.doctype.matter.matter.expense_update"
+    },
+    "Payment Entry": {
+        "on_submit": "case_management.case_management.doctype.matter.matter.payment_update",
+        "on_cancel": "case_management.case_management.doctype.matter.matter.payment_cancel"
+
+    },
+    "Timesheet": {
+        "on_submit": "case_management.case_management.doctype.matter.matter.timesheet_update",
+        "on_cancel": "case_management.case_management.doctype.matter.matter.timesheet_update"
+    }
+}
 
 # Scheduled Tasks
 # ---------------
@@ -125,4 +127,3 @@ doc_events = {
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "case_management.event.get_events"
 # }
-
