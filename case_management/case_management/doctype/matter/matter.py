@@ -10,7 +10,6 @@ from frappe.utils import cint, flt
 
 
 class Matter(Document):
-    pass
 
     def before_submit(self):
         self.status = "Close"
@@ -27,6 +26,20 @@ class Matter(Document):
                 dt.title = row[0]
         else:
             frappe.throw("""Please select a Custom Field Preset. """)
+
+    def after_insert(self):
+        try:
+            create_new_folder("Case Files", "Home")
+            create_new_folder(self.name, "Home/Case Files")
+        except frappe.DuplicateEntryError:
+            pass
+
+def create_new_folder(file_name, folder):
+    file = frappe.new_doc("File")
+    file.file_name = file_name
+    file.is_folder = 1
+    file.folder = folder
+    file.insert()
 
 @frappe.whitelist()
 def get_events(start, end, filters=None):
@@ -49,12 +62,10 @@ def get_events(start, end, filters=None):
     }, as_dict=True)
     return data
 
-
 @frappe.whitelist()
 def get_lawyer(doctype, txt, searchfield, start, page_len, filters):
     return frappe.db.sql("""select u.name, concat(u.first_name, ' ', u.last_name) from tabUser u, `tabHas Role` r where
     u.name = r.parent and r.role = 'Lawyer' and u.enabled = 1 and u.name like %s""", ("%" + txt + "%"))
-
 
 @frappe.whitelist()
 def make_invoice(source_name, target_doc=None):
@@ -98,6 +109,26 @@ def make_expense(source_name, target_doc=None):
 
     return target_doc
 
+@frappe.whitelist()
+def make_task(source_name, target_doc=None):
+    def set_missing_values(source, target):
+        pass
+
+    def update_item(source, target, source_parent):
+        pass
+
+    target_doc = get_mapped_doc("Matter", source_name, {
+        "Matter": {
+            "doctype": "Task",
+            "field_map": {
+                "client": "customer",
+                "matter_id": "name",
+            }
+        },
+
+    }, target_doc, set_missing_values)
+
+    return target_doc
 
 @frappe.whitelist()
 def make_timesheet(source_name, target_doc=None):
@@ -119,7 +150,6 @@ def make_timesheet(source_name, target_doc=None):
 
     return target_doc
 
-
 def invoice_update(doc, method):
     if not doc.matter_id:
         return
@@ -137,7 +167,6 @@ def invoice_update(doc, method):
         frappe.db.sql(
             """delete from `tabMatter Invoice` where parent="{}" and invoice="{}" """.format(doc.matter_id, doc.name))
 
-
 def timesheet_update(doc, method):
     if not doc.matter:
         return
@@ -153,13 +182,11 @@ def timesheet_update(doc, method):
         frappe.db.sql(
             """delete from `tabMatter Timesheet` where parent="{}" and time_sheet="{}" """.format(doc.matter, doc.name))
 
-
 def invoice_payment_update(doc, method):
     for row in doc.references:
         if row.allocated_amount == row.outstanding_amount and row.reference_doctype == "Sales Invoice":
             frappe.db.sql(
                 """update `tabMatter Invoice` set status="Paid" where invoice="{}" """.format(row.reference_name))
-
 
 def invoice_payment_cancel(doc, method):
     for row in doc.references:
@@ -168,10 +195,9 @@ def invoice_payment_cancel(doc, method):
                 """update `tabMatter Invoice` set status="Unpaid" where  invoice="{}" """.format(row.reference_name))
 
 
-
-
 @frappe.whitelist()
 def resolve(doctype, docname):
     # update without checking permissions
-    frappe.db.sql("update `tab%s` set status = 'Closed' where name = '%s'" % (doctype, docname))
+    frappe.db.sql("update `tab%s` set status = 'Closed' , docsta"
+                  "tus=1 where name = '%s'" % (doctype, docname))
     return True
