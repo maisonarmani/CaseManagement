@@ -42,6 +42,8 @@ def create_new_folder(file_name, folder):
     file.insert()
 
 
+
+
 @frappe.whitelist()
 def get_events(start, end, filters=None):
     """Returns events for Gantt / Calendar view rendering.

@@ -73,7 +73,8 @@ fixtures = ["Custom Field", "Workflow"]
 # ---------------
 # Hook on document methods and events
 
-calendars = []
+calendars = ["Matter"]
+
 
 doc_events = {
     "Sales Invoice": {
