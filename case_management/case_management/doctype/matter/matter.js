@@ -15,6 +15,14 @@ frappe.ui.form.on('Matter', {
             });
         };
 
+        frm.add_custom_button(__('Events/Calendar'), function () {
+            frappe.set_route("List", "Event", {'matter': frm.doc.name});
+        }).css({"background-color": "rgb(150, 80, 20)", "color": 'white', "font-weight": 'bolder'});
+
+        frm.add_custom_button(__('Contact'), function () {
+            frappe.set_route("List", "Address", {'link_name': frm.doc.client});
+        }).css({"background-color": "rgb(150, 180, 200)", "color": 'white', "font-weight": 'bolder'});
+
         frm.add_custom_button(__('Add Case File'), function () {
             frappe.set_route("List", "File", "Home", "Case Files")
         }).css({"background-color": "rgb(20, 33, 100)", "color": 'white', "font-weight": 'bolder'});
@@ -34,7 +42,8 @@ frappe.ui.form.on('Matter', {
         frm.add_custom_button(__('Add Task'), function () {
             open_mapped_doc("case_management.case_management.doctype.matter.matter.make_task");
         }).css({"background-color": "rgb(20, 100, 122)", "color": 'white', "font-weight": 'bolder'});
-        // Close Matter
+
+         // Close Matter
         if (cur_frm.doc.status != "Closed") {
             frm.add_custom_button(__('Close Matter'), function () {
                 frappe.confirm("Are you sure you want to close this this matter?", function () {
