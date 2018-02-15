@@ -14,11 +14,16 @@ class Matter(Document):
         self.status = "Close"
         self.close_date = frappe.utils.nowdate()
 
+    def on_trash(self):
+        file = frappe.db.sql("select name from `tabFile` where file_name = \"{0}\"".format(self.name))
+        if len(file) > 0:
+            frappe.throw("Sorry, Matter cannot be deleted. Case files exist for matter.")
+
     def get_custom_field(self):
         if self.custom_field:
             data = frappe.db.sql(
-                """select title from `tabMatter Custom Check List Item` where parent="{}" """.format(self.custom_field),
-                as_list=1)
+                """select title from `tabMatter Custom Check List Item` where parent="{}" """
+                    .format(self.custom_field), as_list=1)
             self.check_list = []
             for row in data:
                 dt = self.append('check_list', {})
@@ -40,8 +45,6 @@ def create_new_folder(file_name, folder):
     file.is_folder = 1
     file.folder = folder
     file.insert()
-
-
 
 
 @frappe.whitelist()
