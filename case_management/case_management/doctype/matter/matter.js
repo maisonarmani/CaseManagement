@@ -3,9 +3,22 @@
 
 frappe.ui.form.on('Matter', {
     onload: function (frm) {
-        var filter = function (p) {
-            return {filters: {designation: p}}
-        };
+        frm.fields_dict["practice_area"].get_query = function() {
+			return {
+				filters: {
+					"parent1": ""
+				}
+			};
+		};
+    },
+    practice_area:function (frm) {
+        frm.fields_dict["transaction"].get_query = function() {
+			return {
+				filters: {
+					"parent1" : frm.doc.practice_area
+				}
+			};
+		};
     },
     refresh: function (frm) {
         var open_mapped_doc = function (method) {

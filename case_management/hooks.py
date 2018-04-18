@@ -4,11 +4,11 @@ from . import __version__ as app_version
 
 app_name = "case_management"
 app_title = "Case Management"
-app_publisher = "bobzz.zone@gmail.com"
+app_publisher = "masonarmani38@gmail.com"
 app_description = "Case Management"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
-app_email = "bobzz.zone@gmail.com"
+app_email = "masonarmani38@gmail.com"
 app_license = "MIT"
 
 # Includes in <head>
@@ -43,7 +43,7 @@ app_license = "MIT"
 # website_generators = ["Web Page"]
 
 # Fixtures
-fixtures = ["Custom Field", "Workflow"]
+fixtures = []
 
 # Installation
 # ------------
@@ -88,11 +88,13 @@ doc_events = {
     "Payment Entry": {
         "on_submit": "case_management.case_management.doctype.matter.matter.payment_update",
         "on_cancel": "case_management.case_management.doctype.matter.matter.payment_cancel"
-
     },
     "Timesheet": {
         "on_submit": "case_management.case_management.doctype.matter.matter.timesheet_update",
         "on_cancel": "case_management.case_management.doctype.matter.matter.timesheet_update"
+    },
+    "Company": {
+        "on_change": "case_management.case_management.api.set_translation",
     }
 }
 
