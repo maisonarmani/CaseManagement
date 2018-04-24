@@ -117,6 +117,26 @@ def make_expense(source_name, target_doc=None):
 
     return target_doc
 
+@frappe.whitelist()
+def make_advance(source_name, target_doc=None):
+    def set_missing_values(source, target):
+        pass
+
+    def update_item(source, target, source_parent):
+        pass
+
+    target_doc = get_mapped_doc("Matter", source_name, {
+        "Matter": {
+            "doctype": "Employee Advance",
+            "field_map": {
+                "matter": "name",
+            }
+        },
+
+    }, target_doc, set_missing_values)
+
+    return target_doc
+
 
 @frappe.whitelist()
 def make_task(source_name, target_doc=None):
@@ -232,6 +252,11 @@ def timesheet_update(doc, method):
 @frappe.whitelist()
 def resolve(doctype, docname):
     # update without checking permissions
-    frappe.db.sql("update `tab%s` set status = 'Closed' , docsta"
-                  "tus=1 where name = '%s'" % (doctype, docname))
+    frappe.db.sql("update `tab%s` set status = 'Closed' , docstatus=1 where name = '%s'" % (doctype, docname))
+    return True
+
+@frappe.whitelist()
+def reopen(doctype, docname):
+    # update without checking permissions
+    frappe.db.sql("update `tab%s` set status = 'Open' , docstatus=0 where name = '%s'" % (doctype, docname))
     return True
