@@ -13,9 +13,9 @@ frappe.ui.form.on('Matter', {
 
         if (!cur_frm.doc.__islocal){
             if (cur_frm.doc.status != "Closed") {
-                frm.add_custom_button(__('Add Case File'), function () {
-                    frappe.set_route("List", "File", "Home", "Case Files")
-                }).css({"background-color": "rgb(20, 33, 100)", "color": 'white', "font-weight": 'bolder'});
+                // frm.add_custom_button(__('Add Case File'), function () {
+                //     frappe.set_route("List", "File", "Home", "Case Files")
+                // }).css({"background-color": "rgb(20, 33, 100)", "color": 'white', "font-weight": 'bolder'});
 
                 // Make
                 frm.add_custom_button(__('Add Invoice'), function () {
@@ -26,17 +26,17 @@ frappe.ui.form.on('Matter', {
                     open_mapped_doc("case_management.case_management.doctype.matter.matter.make_expense");
                 }).css({"background-color": "rgb(20, 122, 22)", "color": 'white', "font-weight": 'bolder'});
 
-                frm.add_custom_button(__('Add Employee Advance'), function () {
-                    open_mapped_doc("case_management.case_management.doctype.matter.matter.make_advance");
-                }).css({"background-color": "rgb(20, 122, 22)", "color": 'white', "font-weight": 'bolder'});
+                // frm.add_custom_button(__('Add Employee Advance'), function () {
+                //     open_mapped_doc("case_management.case_management.doctype.matter.matter.make_advance");
+                // }).css({"background-color": "rgb(20, 122, 22)", "color": 'white', "font-weight": 'bolder'});
 
                 frm.add_custom_button(__('Add Timesheet'), function () {
                     open_mapped_doc("case_management.case_management.doctype.matter.matter.make_timesheet");
                 }).css({"background-color": "rgb(20, 62, 22)", "color": 'white', "font-weight": 'bolder'});
-
-                frm.add_custom_button(__('Add Task'), function () {
-                    open_mapped_doc("case_management.case_management.doctype.matter.matter.make_task");
-                }).css({"background-color": "rgb(20, 100, 122)", "color": 'white', "font-weight": 'bolder'});
+                //
+                // frm.add_custom_button(__('Add Task'), function () {
+                //     open_mapped_doc("case_management.case_management.doctype.matter.matter.make_task");
+                // }).css({"background-color": "rgb(20, 100, 122)", "color": 'white', "font-weight": 'bolder'});
             }
              // Close Matter
             if (frappe.user.name == cur_frm.doc.owner) {
