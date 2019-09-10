@@ -95,6 +95,9 @@ doc_events = {
     },
     "Company": {
         "on_change": "case_management.case_management.api.set_translation",
+    },
+    "Customer": {
+        "on_update": "case_management.client.update_all"
     }
 }
 
