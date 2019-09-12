@@ -13,8 +13,6 @@ from frappe import share, _
 def update_customer_folder_structure(customer):
 
     root = create_client_root_folder()
-
-
     folders, client_name = [], customer.name
     client_structure = get_structure(structure="Default", client=client_name)
     folders.append({"parent": root, "folder_name": client_name})
@@ -148,7 +146,7 @@ def create_customer_user(customer):
 @frappe.whitelist()
 def update_all(customer, trigger=""):
     try:
-        create_customer_user(customer)
+        #create_customer_user(customer)
         update_customer_folder_structure(customer)
     except Exception as err:
         frappe.errprint(err)
