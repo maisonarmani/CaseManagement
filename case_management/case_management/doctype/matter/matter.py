@@ -15,7 +15,7 @@ class Matter(Document):
         self.close_date = frappe.utils.nowdate()
 
     def on_trash(self):
-        file = frappe.db.sql("select name from `tabFile` where file_name = \"{0}\"".format(self.name))
+        file = frappe.db.sql("select name from `tabFile` where file_name = \"Home/Clients/{0}\"".format(self.name))
         if len(file) > 0:
             frappe.throw("Sorry, Matter cannot be deleted. Case files exist for matter.")
 
@@ -33,10 +33,10 @@ class Matter(Document):
 
     def after_insert(self):
         file = frappe.db.sql("select name from `tabFile` where name = '{0}'"
-                             .format("Home/Case Files"), as_dict=1)
+                             .format("Home/Clients"), as_dict=1)
         if len(file) == 0:
-            create_new_folder("Case Files", "Home")
-        create_new_folder(self.name, "Home/Case Files")
+            create_new_folder("Home/Clients", "Home")
+        create_new_folder(self.name, "Home/Clients/%s" % self.client)
 
 
 def create_new_folder(file_name, folder):
