@@ -81,6 +81,24 @@ def get_data():
                     "name": "Matter Report",
                     "doctype": "Matter",
                     "is_query_report": True
+                },
+                {
+                    "type": "report",
+                    "name": "Matter Status Report",
+                    "doctype": "Matter",
+                    "is_query_report": True
+                },
+                {
+                    "type": "report",
+                    "name": "Matter Billing Report",
+                    "doctype": "Matter",
+                    "is_query_report": True
+                },
+                {
+                    "type": "report",
+                    "name": "Matter Summary Report",
+                    "doctype": "Matter",
+                    "is_query_report": True
                 }
             ]
         }
