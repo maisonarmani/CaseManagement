@@ -28,7 +28,6 @@ frappe.query_reports["Matter Status Report"] = {
             "options": [
                 "Draft", "Closed", "Open"
             ]
-
         },
     ]
-}
+};

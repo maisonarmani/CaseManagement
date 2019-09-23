@@ -84,38 +84,22 @@ def get_data():
                 },
                 {
                     "type": "report",
-                    "name": "Accounts Receivable",
-                    "doctype": "Sales Invoice",
+                    "name": "Matter Status Report",
+                    "doctype": "Matter",
                     "is_query_report": True
                 },
                 {
                     "type": "report",
-                    "name": "Accounts Payable",
-                    "doctype": "Purchase Invoice",
+                    "name": "Matter Billing Report",
+                    "doctype": "Matter",
                     "is_query_report": True
                 },
                 {
                     "type": "report",
-                    "name": "Sales Invoice",
-                    "doctype": "Sales Invoice",
+                    "name": "Matter Summary Report",
+                    "doctype": "Matter",
                     "is_query_report": True
-                },
-                {
-                    "type": "report",
-                    "name": "Gross Profit",
-                    "doctype": "Sales Invoice",
-                    "is_query_report": True
-                },
-            ]
-        },
-        {
-            "label": _("Setup"),
-            "items": [
-                {
-                    "type": "doctype",
-                    "name": "Matter Custom Check List",
-                    "description": _("Matter Custom Check List")
-                },
+                }
             ]
         }
     ]

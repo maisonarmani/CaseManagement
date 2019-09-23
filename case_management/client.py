@@ -146,7 +146,6 @@ def create_customer_user(customer):
 @frappe.whitelist()
 def update_all(customer, trigger=""):
     try:
-        #create_customer_user(customer)
         update_customer_folder_structure(customer)
     except Exception as err:
         frappe.errprint(err)
@@ -335,3 +334,4 @@ def delete_bulk_force(doctype, items, recursive =False):
 def get_children(doctype, parent):
 	return frappe.db.sql ("select name from `tab{0}` where name like '%{1}%' "
 						  "and name != '{1}'".format(doctype,parent), as_dict=1)
+
