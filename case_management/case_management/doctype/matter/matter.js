@@ -50,6 +50,11 @@ frappe.ui.form.on('Matter', {
                 frm.add_custom_button(__('Add Timesheet'), function () {
                     open_mapped_doc("case_management.case_management.doctype.matter.matter.make_timesheet");
                 }).css({"background-color": "rgb(20, 62, 22)", "color": 'white', "font-weight": 'bolder'});
+
+                frm.add_custom_button(__('View Calendar/Events'), function () {
+                    frappe.set_route("List", "Event", {'matter': frm.doc.name});
+                }).css({"background-color": "rgb(40, 68, 22)", "color": 'white', "font-weight": 'bolder'});
+
                 //
                 // frm.add_custom_button(__('Add Task'), function () {
                 //     open_mapped_doc("case_management.case_management.doctype.matter.matter.make_task");

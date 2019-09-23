@@ -33,10 +33,10 @@ class Matter(Document):
 
     def after_insert(self):
         file = frappe.db.sql("select name from `tabFile` where name = '{0}'"
-                             .format("Home/Case Files"), as_dict=1)
+                             .format("Home/Clients"), as_dict=1)
         if len(file) == 0:
-            create_new_folder("Case Files", "Home")
-        create_new_folder(self.name, "Home/Case Files")
+            create_new_folder("Home/Clients", "Home")
+        create_new_folder(self.name, "Home/Clients/%s" % self.client)
 
 
 def create_new_folder(file_name, folder):
@@ -158,6 +158,7 @@ def make_task(source_name, target_doc=None):
     }, target_doc, set_missing_values)
 
     return target_doc
+
 
 
 @frappe.whitelist()
