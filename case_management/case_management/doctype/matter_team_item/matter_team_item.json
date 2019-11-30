@@ -3,18 +3,13 @@
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
- "field_order": [
-  "employee_type",
-  "employee",
-  "employee_name"
- ],
  "fields": [
   {
    "fieldname": "employee_type",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Titie",
-   "options": "Associate\nSenior Associate\nPartner\nSenior Partner\nManaging Partner\nSAN",
+   "options": "Employment Type",
    "reqd": 1
   },
   {

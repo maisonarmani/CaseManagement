@@ -4,13 +4,6 @@
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
- "field_order": [
-  "structure_name",
-  "enabled",
-  "is_default",
-  "apply_on",
-  "folders"
- ],
  "fields": [
   {
    "fieldname": "structure_name",

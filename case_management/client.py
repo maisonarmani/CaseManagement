@@ -43,7 +43,6 @@ def update_customer_matter_folder_structure(matter, customer):
     folders, client_name = [], customer.name
     folder_structure = get_structure()
 
-    frappe.errprint(folder_structure)
     if folder_structure.get('apply_on') == "Matter":
         client_structure = get_structure(client=client_name)
         folders.append({"parent": root, "folder_name": client_name})
@@ -65,8 +64,7 @@ def update_customer_matter_folder_structure(matter, customer):
 def get_structure(client=None):
     if client is None:
         structure = frappe.db.sql(
-            "select apply_on from `tabFolder Structure` fs inner join "
-            "`tabFolder Structure Item` fsi where  fsi.is_root=1 and fs.is_default=1", as_dict=1)
+            "select apply_on from `tabFolder Structure` fs where  fs.is_default=1", as_dict=1)
         return structure[0] if len(structure) else []
 
     def get_children(parent):
