@@ -19,6 +19,10 @@ def update_customer_folder_structure(customer):
     folders, client_name = [], customer.name
     folder_structure = get_structure()
 
+    if folder_structure is []:
+        frappe.throw("Sorry, No folder structure found")
+
+
     if(folder_structure.get('apply_on'))  == "Client":
         client_structure = get_structure(client=client_name)
         folders.append({"parent": root, "folder_name": client_name})
@@ -42,6 +46,9 @@ def update_customer_matter_folder_structure(matter, customer):
     root = create_client_root_folder(customer_email)
     folders, client_name = [], customer.name
     folder_structure = get_structure()
+
+    if folder_structure is []:
+        frappe.throw("Sorry, No folder structure found")
 
     if folder_structure.get('apply_on') == "Matter":
         client_structure = get_structure(client=client_name)
