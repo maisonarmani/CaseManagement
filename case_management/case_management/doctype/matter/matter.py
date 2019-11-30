@@ -15,7 +15,7 @@ class Matter(Document):
         self.close_date = frappe.utils.nowdate()
 
     def on_trash(self):
-        file = frappe.db.sql("select name from `tabFile` where file_name = \"{0}\"".format(self.name))
+        file = frappe.db.sql("select name from `tabFile` where file_name = \"Home/Clients/{0}\"".format(self.name))
         if len(file) > 0:
             frappe.throw("Sorry, Matter cannot be deleted. Case files exist for matter.")
 

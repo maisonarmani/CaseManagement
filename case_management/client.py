@@ -59,7 +59,6 @@ def update_customer_matter_folder_structure(matter, customer):
                         for i in v:
                             folders.append({"parent": "{0}/{1}".format(parent, k), "folder_name": i})
 
-        frappe.errprint(folders)
         for folder in folders:
             create_new_folder(folder.get('folder_name'), folder.get('parent'), customer_email)
 
@@ -102,7 +101,7 @@ def get_structure(client=None):
 
 def create_client_root_folder(customer_email):
     name = "{0}/{1}".format("Home", "Clients")
-    frappe.errprint("creating root %s" % name)
+    #frappe.errprint("creating root %s" % name)
     if not frappe.db.exists("File", name):
         file = frappe.get_doc({
             "doctype": "File",
@@ -167,7 +166,7 @@ def share_file_with_customer_user_top(file, user, notify=0):
 
 def share_all_children(file,user):
     children = frappe.db.sql("select name from `tabFile` where is_folder = 0 and folder = '%s'" % file, as_list=1)
-    frappe.errprint(children)
+    #frappe.errprint(children)
     for child in children:
         share.add("File", child[0], user=user, read=1, write=0, share=0, everyone=0, flags = None, notify = 0)
 
