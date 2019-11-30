@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "sb1",
+  "original_matter_id",
   "status",
   "naming_series",
   "client",
@@ -213,9 +214,18 @@
    "fieldtype": "Link",
    "label": "Responsible Solicitor",
    "options": "Employee"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "original_matter_id",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Original Matter Id"
   }
  ],
- "modified": "2019-09-22 17:52:44.673486",
+ "modified": "2019-10-31 10:25:19.128992",
  "modified_by": "Administrator",
  "module": "Case Management",
  "name": "Matter",

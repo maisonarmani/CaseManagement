@@ -19,6 +19,12 @@ class Matter(Document):
         if len(file) > 0:
             frappe.throw("Sorry, Matter cannot be deleted. Case files exist for matter.")
 
+
+    def autoname(self):
+        if self.original_matter_id is not None:
+            self.name = self.original_matter_id
+        self.name = self.name
+
     def get_custom_field(self):
         if self.custom_field:
             data = frappe.db.sql(
@@ -30,13 +36,6 @@ class Matter(Document):
                 dt.title = row[0]
         else:
             frappe.throw("""Please select a Custom Field Preset. """)
-
-    def after_insert(self):
-        file = frappe.db.sql("select name from `tabFile` where name = '{0}'"
-                             .format("Home/Clients"), as_dict=1)
-        if len(file) == 0:
-            create_new_folder("Home/Clients", "Home")
-        create_new_folder(self.name, "Home/Clients/%s" % self.client)
 
 
 def create_new_folder(file_name, folder):

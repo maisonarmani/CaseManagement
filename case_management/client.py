@@ -11,52 +11,86 @@ import json
 from frappe import share, _
 
 def update_customer_folder_structure(customer):
+    customer_email = customer.get('email')
+    if customer_email is None:
+        frappe.errprint("User information not provided for client ")
 
-    root = create_client_root_folder()
-
-
+    root = create_client_root_folder(customer_email)
     folders, client_name = [], customer.name
-    client_structure = get_structure(structure="Default", client=client_name)
-    folders.append({"parent": root, "folder_name": client_name})
-    for (key, client) in client_structure.items():
-        if isinstance(client, dict):
-            for (k, v) in client.items():
-                parent = "{0}/{1}".format(root, key)
-                folders.append({"parent": parent, "folder_name": k})
+    folder_structure = get_structure()
 
-                if isinstance(v, list):
-                    for i in v:
-                        folders.append({"parent": "{0}/{1}".format(parent, k), "folder_name": i})
+    if(folder_structure.get('apply_on'))  == "Client":
+        client_structure = get_structure(client=client_name)
+        folders.append({"parent": root, "folder_name": client_name})
 
-    for folder in folders:
-        create_new_folder(folder.get('folder_name'), folder.get('parent'))
+        for (key, client) in client_structure.items():
+            if isinstance(client, dict):
+                for (k, v) in client.items():
+                    parent = "{0}/{1}".format(root, key)
+                    folders.append({"parent": parent, "folder_name": k})
+
+                    if isinstance(v, list):
+                        for i in v:
+                            folders.append({"parent": "{0}/{1}".format(parent, k), "folder_name": i})
+
+        for folder in folders:
+            create_new_folder(folder.get('folder_name'), folder.get('parent'), customer_email)
 
 
-def get_structure(structure=None, client=None):
-    def get_children(structure, parent):
-        # check if there's a default set
-        check = frappe.db.sql(
-            "select fsi.child from `tabFolder Structure` fs inner join `tabFolder Structure Item` fsi limit 1",
-            as_list=1)
+def update_customer_matter_folder_structure(matter, customer):
+    customer_email = customer.get('email')
+    root = create_client_root_folder(customer_email)
+    folders, client_name = [], customer.name
+    folder_structure = get_structure()
 
-        if check == []:
-            frappe.throw("Sorry, No folder structure found")
+    frappe.errprint(folder_structure)
+    if folder_structure.get('apply_on') == "Matter":
+        client_structure = get_structure(client=client_name)
+        folders.append({"parent": root, "folder_name": client_name})
+        folders.append({"parent": "{0}/{1}".format(root, client_name), "folder_name": matter.name})
 
+        for (key, client) in client_structure.items():
+            if isinstance(client, dict):
+                for (k, v) in client.items():
+                    parent = "{0}/{1}/{2}".format(root, key,matter.name)
+                    folders.append({"parent": parent, "folder_name": k})
+
+                    if isinstance(v, list):
+                        for i in v:
+                            folders.append({"parent": "{0}/{1}".format(parent, k), "folder_name": i})
+
+        frappe.errprint(folders)
+        for folder in folders:
+            create_new_folder(folder.get('folder_name'), folder.get('parent'), customer_email)
+
+def get_structure(client=None):
+    if client is None:
+        structure = frappe.db.sql(
+            "select apply_on from `tabFolder Structure` fs inner join "
+            "`tabFolder Structure Item` fsi where  fsi.is_root=1 and fs.is_default=1", as_dict=1)
+        return structure[0] if len(structure) else []
+
+    def get_children(parent):
         if parent != "root":
             ls = frappe.db.sql(
                 "select fsi.child from `tabFolder Structure` fs inner join `tabFolder Structure Item` fsi "
                 "where (fsi.parent = fs.name) and fsi.parent_folder='{parent}' and fs.is_default=1"
                     .format(parent=parent), as_list=1)
+
         else:
             ls = frappe.db.sql(
                 "select fsi.child from `tabFolder Structure` fs inner join `tabFolder Structure Item` fsi "
                 "where (fsi.parent = fs.name) and fsi.is_root=1 and fs.is_default=1", as_list=1)
 
+
+        if not len(ls):
+            frappe.throw("Sorry, No folder structure found")
+
         return [x[0] for x in ls]
 
     ls = {}
-    for child in get_children(structure, "root"):
-        children = get_children(structure, child)
+    for child in get_children("root"):
+        children = get_children(child)
         if children == []:
             x = child
         else:
@@ -66,10 +100,10 @@ def get_structure(structure=None, client=None):
     return {client: ls}
 
 
-def create_client_root_folder():
-    _name = "{0}/{1}".format("Home", "Clients")
-
-    if not frappe.db.exists("File", _name):
+def create_client_root_folder(customer_email):
+    name = "{0}/{1}".format("Home", "Clients")
+    frappe.errprint("creating root %s" % name)
+    if not frappe.db.exists("File", name):
         file = frappe.get_doc({
             "doctype": "File",
             "file_name": "Clients",
@@ -82,12 +116,15 @@ def create_client_root_folder():
 
         return file.name
 
-    return _name
+    share_file_with_customer_user_top(name, customer_email, notify=0)
+    share_file_with_customer_user_top("Home", customer_email, notify=0)
+
+    return name
 
 
-def create_new_folder(file_name, folder):
-    _name = "{0}/{1}".format(folder, file_name)
-    if not frappe.db.exists("File", _name):
+def create_new_folder(file_name, folder, user):
+    name = "{0}/{1}".format(folder, file_name)
+    if not frappe.db.exists("File", name):
         file = frappe.get_doc({
             "doctype": "File",
             "file_name": file_name,
@@ -97,6 +134,16 @@ def create_new_folder(file_name, folder):
 
         file.save(ignore_permissions=True)
         frappe.db.commit()
+    if user is not None and str(user):
+        share_file_with_customer_user(name, user)
+
+    sub = 0
+    if isinstance(folder,dict) and folder.get('parent') not in ("Home", "Home/Clients"):
+        sub = 1
+
+
+    if user is not None and str(user):
+        add_user_icon("File", user, label=file_name, link="List/File/%s" % name, standard=0, is_sub=sub)
 
 
 def check_standard_user_module(user, module):
@@ -148,15 +195,26 @@ def create_customer_user(customer):
 @frappe.whitelist()
 def update_all(customer, trigger=""):
     try:
+        create_customer_user(customer)
         update_customer_folder_structure(customer)
     except Exception as err:
         frappe.errprint(err)
 
 
 @frappe.whitelist()
+def update_all_matter(matter, trigger=""):
+    try:
+        customer = frappe.get_doc("Customer",matter.get('client'))
+        update_customer_matter_folder_structure(matter, customer)
+    except Exception as err:
+        frappe.errprint(err)
+
+
+
+@frappe.whitelist()
 def append_permission(doc, trigger=""):
+    # frappe.errprint("doc folder %s and  is folder is %s" % (doc.folder, doc.is_folder))
     if not doc.is_folder:
-        frappe.errprint("doc  %s" % doc.__dict__)
         users = []
         docshares = share.get_users("File", doc.folder)
 
@@ -166,7 +224,6 @@ def append_permission(doc, trigger=""):
             except ValueError:
                 share_file_with_customer_user(doc.name, docshare.user, 0)
                 users.append(docshare.user)
-
 
 def add_user_icon(_doctype, user, _report=None, label=None, link=None, type='link', standard=0, is_sub=0):
     '''Add a new user desktop icon to the desktop'''
@@ -243,11 +300,9 @@ def add_user_icon(_doctype, user, _report=None, label=None, link=None, type='lin
 
     return icon_name
 
-
 def get_all_icons():
     return [d.module_name for d in frappe.get_all('Desktop Icon',
                                                   filters={'standard': 1}, fields=['module_name'])]
-
 
 def clear_desktop_icons_cache(user=None):
     frappe.cache().hdel('desktop_icons', user or frappe.session.user)
@@ -336,4 +391,3 @@ def delete_bulk_force(doctype, items, recursive =False):
 def get_children(doctype, parent):
 	return frappe.db.sql ("select name from `tab{0}` where name like '%{1}%' "
 						  "and name != '{1}'".format(doctype,parent), as_dict=1)
-

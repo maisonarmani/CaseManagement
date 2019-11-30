@@ -98,6 +98,9 @@ doc_events = {
     },
     "Customer": {
         "on_update": "case_management.client.update_all"
+    },
+    "Matter": {
+        "on_update": "case_management.client.update_all_matter"
     }
 }
 
